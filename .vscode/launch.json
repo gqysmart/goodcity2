@@ -3,14 +3,20 @@
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
-        "type": "node",
-        "request": "launch",
-        "name": "启动程序",
-        "program": "${workspaceRoot}/node_modules/webpack/bin/webpack.js",
-        "args": [
-            "--", "--config", "config/webpack.dev.js", "--progress", "--profile"
-        ],
+    "configurations": [
 
-    }]
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "test webpack",
+            "program": "${workspaceRoot}/testkk.js"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost/gqystudio/goodcity2/",
+            "webRoot": "${workspaceRoot}/dist"
+        }
+    ]
 }

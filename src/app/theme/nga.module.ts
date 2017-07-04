@@ -3,14 +3,14 @@ import { CommonModule }  from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgUploaderModule } from 'ngx-uploader';
-// import { AppTranslationModule } from '../app.translation.module';
+import { AppTranslationModule } from '../app.translation.module';
 
 import {
-//   BaThemeConfig
+  GcThemeConfig
 } from './theme.config';
 
 import {
-//   BaThemeConfigProvider
+  GcThemeConfigProvider
 } from './theme.configProvider';
 
 import {
@@ -31,12 +31,12 @@ import {
 //   BaFileUploader
 } from './components';
 
-import { BaCardBlur } from './components/baCard/baCardBlur.directive';
+// import { BaCardBlur } from './components/baCard/baCardBlur.directive';
 
 import {
 //   BaScrollPosition,
 //   BaSlimScroll,
-//   BaThemeRun
+   GcThemeRun
 } from './directives';
 
 import {
@@ -46,10 +46,10 @@ import {
 } from './pipes';
 
 import {
-//   BaImageLoaderService,
-//   BaMenuService,
-//   BaThemePreloader,
-//   BaThemeSpinner
+  GcImageLoaderService,
+  GcMenuService,
+  GcThemePreloader,
+  GcThemeSpinner
 } from './services';
 
 import {
@@ -89,10 +89,10 @@ const NGA_PIPES = [
 ];
 
 const NGA_SERVICES = [
-//   BaImageLoaderService,
-//   BaThemePreloader,
-//   BaThemeSpinner,
-//   BaMenuService
+  GcImageLoaderService,
+  GcThemePreloader,
+  GcThemeSpinner,
+  GcMenuService
 ];
 
 const NGA_VALIDATORS = [
@@ -102,22 +102,22 @@ const NGA_VALIDATORS = [
 
 @NgModule({
   declarations: [
-    // ...NGA_PIPES,
-    // ...NGA_DIRECTIVES,
-    // ...NGA_COMPONENTS
+    ...NGA_PIPES,
+    ...NGA_DIRECTIVES,
+    ...NGA_COMPONENTS
   ],
   imports: [
-    // CommonModule,
-    // RouterModule,
-    // FormsModule,
-    // ReactiveFormsModule,
-    // AppTranslationModule,
-    // NgUploaderModule
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppTranslationModule,
+    NgUploaderModule
   ],
   exports: [
-    // ...NGA_PIPES,
-    // ...NGA_DIRECTIVES,
-    // ...NGA_COMPONENTS
+    ...NGA_PIPES,
+    ...NGA_DIRECTIVES,
+    ...NGA_COMPONENTS
   ]
 })
 export class NgaModule {
@@ -125,10 +125,10 @@ export class NgaModule {
     return <ModuleWithProviders> {
       ngModule: NgaModule,
       providers: [
-        //  BaThemeConfigProvider,
-        // BaThemeConfig,
-        // ...NGA_VALIDATORS,
-        // ...NGA_SERVICES
+         GcThemeConfigProvider,
+        GcThemeConfig,
+        ...NGA_VALIDATORS,
+         ...NGA_SERVICES
       ],
     };
   }

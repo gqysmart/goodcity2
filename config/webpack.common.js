@@ -31,7 +31,7 @@ const HMR = helpers.hasProcessFlag('hot');
 const AOT = process.env.BUILD_AOT || helpers.hasNpmFlag('aot');
 const METADATA = {
     title: '嘉城-精灵系统',
-    baseUrl: '/',
+    baseUrl: '/gqystudio/goodcity2/',
     isDevServer: helpers.isWebpackDevServer(),
     HMR: HMR
 };
