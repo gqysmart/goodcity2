@@ -15,7 +15,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost/gqystudio/goodcity2/",
+            "url": "http://localhost/",
             "webRoot": "${workspaceRoot}/dist"
         }
     ]

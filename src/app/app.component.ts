@@ -48,7 +48,7 @@ export class App {
 
   private _loadImages(): void {
     // register some loaders
-    GcThemePreloader.registerLoader(this._imageLoader.load('/gqystudio/goodcity2/assets/img/sky-bg.jpg'));
+    GcThemePreloader.registerLoader(this._imageLoader.load('/assets/img/sky-bg.jpg'));
   }
 
 }
