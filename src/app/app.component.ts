@@ -16,7 +16,6 @@ import { layoutPaths } from './theme/theme.constants';
   template: `
     <main [class.menu-collapsed]="isMenuCollapsed" gcThemeRun>
       <div class="additional-bg"></div>
-      <h1> this is app component</h1>
       <router-outlet></router-outlet>
     </main>
   `

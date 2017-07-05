@@ -7,10 +7,15 @@ import { PAGES_MENU } from './pages.menu';
 @Component({
   selector: 'pages',
   template: 
-  ` <gc-sidebar></gc-sidebar>
-  <h1> this is pages components</h1>
-  <router-outlet></router-outlet>
-  `
+`<gc-sidebar></gc-sidebar>
+    <gc-page-top></gc-page-top>
+    <div class="al-main">
+      <div class="al-content">
+      
+        <router-outlet></router-outlet>
+      </div>
+    </div>`
+
   // `
   //   <gc-sidebar></gc-sidebar>
   //   <gc-page-top></gc-page-top>

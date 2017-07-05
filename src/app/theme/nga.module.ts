@@ -23,9 +23,9 @@ import {
 //   BaFullCalendar,
   GcMenuItem,
   GcMenu,
-//   BaMsgCenter,
+  GcMsgCenter,
 //   BaMultiCheckbox,
-//   BaPageTop,
+  GcPageTop,
 //   BaPictureUploader,
   GcSidebar,
 //   BaFileUploader
@@ -34,7 +34,7 @@ import {
 // import { BaCardBlur } from './components/baCard/baCardBlur.directive';
 
 import {
-//   BaScrollPosition,
+  GcScrollPosition,
   GcSlimScroll,
    GcThemeRun
 } from './directives';
@@ -42,7 +42,7 @@ import {
 import {
 //   BaAppPicturePipe,
 //   BaKameleonPicturePipe,
-//   BaProfilePicturePipe
+  GcProfilePicturePipe
 } from './pipes';
 
 import {
@@ -67,16 +67,16 @@ const NGA_COMPONENTS = [
 //   BaFullCalendar,
   GcMenuItem,
   GcMenu,
-//   BaMsgCenter,
+  GcMsgCenter,
 //   BaMultiCheckbox,
-//   BaPageTop,
+  GcPageTop,
 //   BaPictureUploader,
   GcSidebar,
 //   BaFileUploader
 ];
 
 const NGA_DIRECTIVES = [
-//   BaScrollPosition,
+  GcScrollPosition,
   GcSlimScroll,
   GcThemeRun,
 //   BaCardBlur
@@ -85,7 +85,7 @@ const NGA_DIRECTIVES = [
 const NGA_PIPES = [
 //   BaAppPicturePipe,
 //   BaKameleonPicturePipe,
-//   BaProfilePicturePipe
+  GcProfilePicturePipe
 ];
 
 const NGA_SERVICES = [
