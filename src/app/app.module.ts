@@ -16,8 +16,7 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-
-
+import { LoginModule} from './pages/login/login.module';
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -36,7 +35,7 @@ export type StoreType = {
 @NgModule({
   bootstrap: [App],
   declarations: [
-    App
+    App,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

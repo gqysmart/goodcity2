@@ -63,7 +63,8 @@ module.exports = function(options) {
         entry: {
 
             'polyfills': './src/polyfills.browser.ts',
-            'main': AOT ? './src/main.browser.aot.ts' : './src/main.browser.ts'
+            'main': AOT ? './src/main.browser.aot.ts' : './src/main.browser.ts',
+
 
         },
 
@@ -417,6 +418,10 @@ module.exports = function(options) {
              * https://github.com/szrenwei/inline-manifest-webpack-plugin
              */
             new InlineManifestWebpackPlugin(),
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: "jquery"
+            })
         ],
 
         /**

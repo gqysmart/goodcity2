@@ -21,13 +21,13 @@ import {
 //   BaCheckbox,
 //   BaContentTop,
 //   BaFullCalendar,
-//   BaMenuItem,
-//   BaMenu,
+  GcMenuItem,
+  GcMenu,
 //   BaMsgCenter,
 //   BaMultiCheckbox,
 //   BaPageTop,
 //   BaPictureUploader,
-//   BaSidebar,
+  GcSidebar,
 //   BaFileUploader
 } from './components';
 
@@ -35,7 +35,7 @@ import {
 
 import {
 //   BaScrollPosition,
-//   BaSlimScroll,
+  GcSlimScroll,
    GcThemeRun
 } from './directives';
 
@@ -65,20 +65,20 @@ const NGA_COMPONENTS = [
 //   BaCheckbox,
 //   BaContentTop,
 //   BaFullCalendar,
-//   BaMenuItem,
-//   BaMenu,
+  GcMenuItem,
+  GcMenu,
 //   BaMsgCenter,
 //   BaMultiCheckbox,
 //   BaPageTop,
 //   BaPictureUploader,
-//   BaSidebar,
+  GcSidebar,
 //   BaFileUploader
 ];
 
 const NGA_DIRECTIVES = [
 //   BaScrollPosition,
-//   BaSlimScroll,
-//   BaThemeRun,
+  GcSlimScroll,
+  GcThemeRun,
 //   BaCardBlur
 ];
 

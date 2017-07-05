@@ -1,0 +1,1 @@
+export * from "./gcSlimScroll.directive";
