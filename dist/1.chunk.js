@@ -1,1 +1,140 @@
-webpackJsonpac__name_([1],{509:function(e,t,n){"use strict";var r=this&&this.__decorate||function(e,t,n,r){var o,a=arguments.length,i=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,n):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(e,t,n,r);else for(var c=e.length-1;c>=0;c--)(o=e[c])&&(i=(a<3?o(i):a>3?o(t,n,i):o(t,n))||i);return a>3&&i&&Object.defineProperty(t,n,i),i};Object.defineProperty(t,"__esModule",{value:!0});var o=n(0),a=n(11),i=n(25),c=n(135),d=n(134),s=n(511),u=n(519),f=function(){function e(){}return e}();f=r([o.NgModule({imports:[a.CommonModule,i.FormsModule,c.AppTranslationModule,d.NgaModule,u.routing],declarations:[s.Dashboard],providers:[]})],f),t.DashboardModule=f},511:function(e,t,n){"use strict";var r=this&&this.__decorate||function(e,t,n,r){var o,a=arguments.length,i=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,n):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)i=Reflect.decorate(e,t,n,r);else for(var c=e.length-1;c>=0;c--)(o=e[c])&&(i=(a<3?o(i):a>3?o(t,n,i):o(t,n))||i);return a>3&&i&&Object.defineProperty(t,n,i),i},o=this&&this.__metadata||function(e,t){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(e,t)};Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),i=function(){function e(){}return e}();i=r([a.Component({selector:"dashboard",styles:[n(516)],template:n(518)}),o("design:paramtypes",[])],i),t.Dashboard=i},516:function(e,t,n){var r=n(517);e.exports="string"==typeof r?r:r.toString()},517:function(e,t,n){t=e.exports=n(46)(void 0),t.push([e.i,"@media screen and (min-width: 1620px) {\n  .row.shift-up > * {\n    margin-top: -573px; } }\n\n@media screen and (max-width: 1620px) {\n  .card.feed-panel.large-card {\n    height: 824px; } }\n\n.user-stats-card .card-title {\n  padding: 0 0 15px; }\n\n.blurCalendar {\n  height: 475px; }\n",""])},518:function(e,t){e.exports='<div class="row">\n    <h1> this is dashboard</h1>\n</div>'},519:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(45),o=n(511);t.routes=[{path:"",component:o.Dashboard,children:[]}],t.routing=r.RouterModule.forChild(t.routes)}});
+webpackJsonpac__name_([1],{
+
+/***/ 592:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var common_1 = __webpack_require__(11);
+var forms_1 = __webpack_require__(26);
+var app_translation_module_1 = __webpack_require__(148);
+var nga_module_1 = __webpack_require__(147);
+var dashboard_component_1 = __webpack_require__(594);
+var dashboard_routing_1 = __webpack_require__(602);
+var DashboardModule = (function () {
+    function DashboardModule() {
+    }
+    return DashboardModule;
+}());
+DashboardModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule,
+            forms_1.FormsModule,
+            app_translation_module_1.AppTranslationModule,
+            nga_module_1.NgaModule,
+            dashboard_routing_1.routing
+        ],
+        declarations: [
+            dashboard_component_1.Dashboard
+        ],
+        providers: []
+    })
+], DashboardModule);
+exports.DashboardModule = DashboardModule;
+
+
+/***/ }),
+
+/***/ 594:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var Dashboard = (function () {
+    function Dashboard() {
+    }
+    return Dashboard;
+}());
+Dashboard = __decorate([
+    core_1.Component({
+        selector: 'dashboard',
+        styles: [__webpack_require__(599)],
+        template: __webpack_require__(601)
+    }),
+    __metadata("design:paramtypes", [])
+], Dashboard);
+exports.Dashboard = Dashboard;
+
+
+/***/ }),
+
+/***/ 599:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+        var result = __webpack_require__(600);
+
+        if (typeof result === "string") {
+            module.exports = result;
+        } else {
+            module.exports = result.toString();
+        }
+    
+
+/***/ }),
+
+/***/ 600:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "@media screen and (min-width: 1620px) {\n  .row.shift-up > * {\n    margin-top: -573px; } }\n\n@media screen and (max-width: 1620px) {\n  .card.feed-panel.large-card {\n    height: 824px; } }\n\n.user-stats-card .card-title {\n  padding: 0 0 15px; }\n\n.blurCalendar {\n  height: 475px; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 601:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n    <h1> this is dashboard</h1>\n</div>"
+
+/***/ }),
+
+/***/ 602:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var router_1 = __webpack_require__(47);
+var dashboard_component_1 = __webpack_require__(594);
+// noinspection TypeScriptValidateTypes
+exports.routes = [
+    {
+        path: '',
+        component: dashboard_component_1.Dashboard,
+        children: []
+    }
+];
+exports.routing = router_1.RouterModule.forChild(exports.routes);
+
+
+/***/ })
+
+});
+//# sourceMappingURL=1.chunk.js.map

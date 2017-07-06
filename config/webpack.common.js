@@ -22,6 +22,8 @@ const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
+
+
 //const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 /**
@@ -61,7 +63,10 @@ module.exports = function(options) {
          * See: http://webpack.github.io/docs/configuration.html#entry
          */
         entry: {
-
+            'style': ['./src/styles/3rd.scss', ],
+            'vendor': ['jquery', 'jquery-slimscroll', 'tether', 'bootstrap',
+                // './src/styles/bootstrap.css', './node_modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss', './node_modules/font-awesome/scss/font-awesome.scss', "./node_modules/ionicons/dist/scss/ionicons.scss", "./node_modules/ng2-slim-loading-bar/style.css"
+            ],
             'polyfills': './src/polyfills.browser.ts',
             'main': AOT ? './src/main.browser.aot.ts' : './src/main.browser.ts',
 
@@ -185,7 +190,7 @@ module.exports = function(options) {
                  */
                 {
                     test: /\.html$/,
-                    use: 'raw-loader',
+                    loader: 'raw-loader',
                     exclude: [helpers.root('src/index.html')]
                 },
 
@@ -199,10 +204,10 @@ module.exports = function(options) {
 
                 /* File loader for supporting fonts, for example, in CSS files.
                  */
-                {
-                    test: /\.(eot|woff2?|svg|ttf)([\?]?.*)$/,
-                    use: 'file-loader'
-                }
+                //  { test: /\.(eot|svg|ttf|woff)/, loader: 'file-loader?name=fonts/[hash].[ext]' },
+                { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]" },
+                { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader?name=assets/fonts/[name].[ext]' }
+
 
             ],
 
@@ -236,10 +241,14 @@ module.exports = function(options) {
              * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
              * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
              */
-            new CommonsChunkPlugin({
-                name: 'polyfills',
-                chunks: ['polyfills']
-            }),
+            // new CommonsChunkPlugin({
+            //     name: 'polyfills',
+            //     chunks: ['polyfills']
+            // }),
+            // new CommonsChunkPlugin({
+            //     name: '3rd',
+            //     chunks: ['main', 'vendor', 'style', 'polyfills']
+            // }),
             /**
              * This enables tree shaking of the vendor modules
              */
@@ -321,9 +330,9 @@ module.exports = function(options) {
              * See: https://github.com/numical/script-ext-html-webpack-plugin
              */
             new ScriptExtHtmlWebpackPlugin({
-                sync: /polyfill|vendor/,
+                sync: /polyfill|vendor|style|3rd/,
                 defaultAttribute: 'async',
-                preload: [/polyfill|vendor|main/],
+                preload: [/polyfill|vendor|main|style/],
                 prefetch: [/chunk/]
             }),
 
@@ -420,7 +429,8 @@ module.exports = function(options) {
             new InlineManifestWebpackPlugin(),
             new webpack.ProvidePlugin({
                 $: "jquery",
-                jQuery: "jquery"
+                jQuery: "jquery",
+                Tether: "tether"
             })
         ],
 
