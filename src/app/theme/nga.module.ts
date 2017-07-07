@@ -15,11 +15,11 @@ import {
 
 import {
 //   BaAmChart,
-//   BaBackTop,
-//   BaCard,
+  GcBackTop,
+  GcCard,
 //   BaChartistChart,
 //   BaCheckbox,
-//   BaContentTop,
+  GcContentTop,
 //   BaFullCalendar,
   GcMenuItem,
   GcMenu,
@@ -59,11 +59,12 @@ import {
 
 const NGA_COMPONENTS = [
 //   BaAmChart,
-//   BaBackTop,
-//   BaCard,
+  GcBackTop,
+  GcCard,
 //   BaChartistChart,
 //   BaCheckbox,
-//   BaContentTop,
+  
+  GcContentTop,
 //   BaFullCalendar,
   GcMenuItem,
   GcMenu,
