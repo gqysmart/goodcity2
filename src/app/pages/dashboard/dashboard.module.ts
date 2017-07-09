@@ -7,6 +7,8 @@ import { NgaModule } from '../../theme/nga.module';
 import { Dashboard } from './dashboard.component';
 import { routing }       from './dashboard.routing';
 
+import { LeafletMaps } from './maps'
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +18,7 @@ import { routing }       from './dashboard.routing';
     routing
   ],
   declarations: [
-    
+    LeafletMaps,
     Dashboard
   ],
   providers: [

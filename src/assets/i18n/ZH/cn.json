@@ -1,0 +1,61 @@
+{
+    "login": {
+        "title": "登录到 嘉城-sprite系统",
+        "signup_link": "嘉城-sprite系统 新用户? 请注册!",
+        "email": "电子邮箱",
+        "password": "密码",
+        "sign_in": "登录",
+        "forgot_password": "忘记密码?",
+        "sign_from_app_text": "一键登录",
+        "share_on_facebook": "Share on Facebook",
+        "share_on_twitter": "Share on Twitter",
+        "share_on_google_plus": "Share on Google Plus"
+    },
+    "general": {
+        "government": "政府",
+        "group": "集团",
+        "custom": "自定义",
+        "goodcity": "嘉城",
+        "akveo": "嘉城",
+        "home": "主页",
+        "category": "目录",
+        "dashboard": "控制台",
+
+
+        "created_with": "Created with"
+    },
+    "project": {
+        "project_location": "项目地址",
+        "project_summary": "项目描述",
+        "project_constraint_rules": "开发约定",
+        "project_planMgr": "方案管理",
+        "project_scheduleMgr": "进度计划管理",
+        "project_operatorMgr": "运营管理",
+        "project_docmentMgr": "资料管理",
+        "project_finaceMgr": "财务管理",
+        "project_productMgr": "产品管理",
+        "project_dev_parameters": "开发参数",
+        "project_departmentMgr": "部门管理",
+        "project_adminMgr": "行政管理"
+
+    },
+    "parameters": {
+        "parameters_cost": "成本参数",
+        "parameters_design": "设计参数"
+
+    },
+    "chart": {
+        "lines": "Lines",
+        "bars": "Bars",
+        "simple_line_chart": "Simple line chart",
+        "line_chart": "Line chart with area",
+        "bi_polar_line_chart": "Bi-polar line chart with area only",
+        "simple_bar_chart": "Simple bar chart",
+        "multi_line_labels_bar_chart": "Multi-line labels bar chart",
+        "stacked_bar_chart": "Stacked bar chart",
+        "pies_and_donuts": "Pies & Donuts",
+        "simple_pie": "Simple Pie",
+        "pie_with_labels": "Pie with labels",
+        "donut": "Donut"
+    }
+}

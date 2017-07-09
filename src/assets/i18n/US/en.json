@@ -1,7 +1,7 @@
 {
     "login": {
-        "title": "Sign in to ng2-admin",
-        "signup_link": "New to ng2-admin? Sign up!",
+        "title": "Sign in to Goodcity-sprite",
+        "signup_link": "New to Goodcity-sprite? Sign up!",
         "email": "Email",
         "password": "Password",
         "sign_in": "Sign in",
@@ -12,13 +12,13 @@
         "share_on_google_plus": "Share on Google Plus"
     },
     "general": {
-        "akveo": "Akveo",
+        "akveo": "Goodcity",
         "home": "Home",
         "forms": {
             "option1": "Option 1"
         },
         "menu": {
-            "dashboard": "Dashboard",
+            "dashboard": "控制台",
             "editors": "Editors",
             "ck_editor": "CKEditor",
             "components": "Components",
