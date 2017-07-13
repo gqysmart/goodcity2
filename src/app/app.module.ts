@@ -12,7 +12,7 @@ import { routing } from './app.routing';
 
 // App is our top level component
 import { App } from './app.component';
-import { AppState, InternalStateType } from './app.service';
+import { AppState, InternalStateType, IModel } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
@@ -20,7 +20,8 @@ import { LoginModule} from './pages/login/login.module';
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  GlobalState
+  GlobalState,
+  IModel
 ];
 
 export type StoreType = {

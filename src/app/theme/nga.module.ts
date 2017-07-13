@@ -17,6 +17,8 @@ import {
 //   BaAmChart,
   GcBackTop,
   GcCard,
+  
+  GcForm,
 //   BaChartistChart,
 //   BaCheckbox,
   GcContentTop,
@@ -61,6 +63,7 @@ const NGA_COMPONENTS = [
 //   BaAmChart,
   GcBackTop,
   GcCard,
+  GcForm,
 //   BaChartistChart,
 //   BaCheckbox,
   

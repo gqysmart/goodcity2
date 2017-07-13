@@ -1,7 +1,7 @@
 @import '../../../../theme/sass/conf/conf';
 :host /deep/ .leaflet-maps {
     width: 100%;
-    height: calc(100vh - 283px);
+    height: calc(100%);
     /* required styles */
     .leaflet-map-pane,
     .leaflet-tile,

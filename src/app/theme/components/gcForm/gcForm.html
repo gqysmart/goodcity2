@@ -1,0 +1,27 @@
+<form>
+    <div *ngFor="let control of controls;let ix=index;">
+        <div [ngSwitch]="control.$attributes.type">
+            <div *ngSwitchCase=""></div>
+            <div *ngSwitchDefault>
+                <div class="form-group">
+                    <div *ngIf="control.$attributes.unit && control.$attributes.unit.value">
+                        <label for={{control.$desc.cn}}{{ix}}>{{control.$desc.cn}}</label>
+                        <div class="input-group">
+                            <span *ngIf="control.$attributes.unit.category == 'currency'" class="input-group-addon addon-left input-group-addon-success">¥</span>
+                            <input type="text" class="form-control with-primary-addon" [(ngModel)]="control.$value" id={{control.$desc.cn}}{{ix}} name={{control.$desc.cn}}{{ix}}>
+                            <span class="input-group-addon addon-right input-group-addon-primary">{{control.$attributes.unit.value}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!control.$attributes.unit || !control.$attributes.unit.value">
+                        <label for={{control.$desc.cn}}{{ix}}>{{control.$desc.cn}}</label>
+                        <input type="text" class="form-control" [(ngModel)]="control.$value" id={{control.$desc.cn}}{{ix}} name={{control.$desc.cn}}{{ix}}>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>

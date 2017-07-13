@@ -18,7 +18,7 @@ export class LeafletMaps {
     L.Icon.Default.imagePath = 'assets/img/theme/vendor/leaflet/';
     var map = L.map(el).setView([32.04,118.78], 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="http://www.goodcity.net">Goodcity</a> contributors'
     }).addTo(map);
 
     L.marker([32.04,118.78]).addTo(map)

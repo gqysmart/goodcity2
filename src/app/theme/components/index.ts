@@ -5,3 +5,4 @@ export * from './gcMsgCenter';
 export * from './gcContentTop';
 export * from './gcBackTop';
 export * from './gcCard';
+export * from './gcForm';

@@ -1,43 +1,11 @@
-<leaflet-maps>
-
-</leaflet-maps>
-
-
-
 <div class="row">
-    <gc-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" title="project.project_summary" gcCardClass="traffic-panel medium-card">
-        this is traffic
+    <gc-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" title="project.project_location" gcCardClass="medium-card with-scroll">
+        <leaflet-maps>
+        </leaflet-maps>
     </gc-card>
 
-    <gc-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" title="project.project_constraint_rules" gcCardClass="medium-card">
-        this is usermap
+    <gc-card *ngFor="let panel of panels" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" title={{panel.$desc.cn}} gcCardClass=" medium-card with-scroll">
+        <gc-form [data]="panel"></gc-form>
     </gc-card>
-</div>
 
-<div class="row">
-    <div class="col-xlg-9 col-xl-6 col-lg-6  col-md-12 col-sm-12 col-12">
-        <div class="row">
-            <gc-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-12" title="project.project_operatorMgr" gcCardClass="medium-card">
-                this is line chart </gc-card>
-            <gc-card class="col-xlg-4 col-xl-12 col-lg-12 col-md-5 col-sm-12 col-12" gcCardClass="popular-app medium-card">
-                this is pop app
-            </gc-card>
-        </div>
-    </div>
-
-    <div class="col-xlg-3 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-        <gc-card title="project.project_planMgr" gcCardClass="large-card with-scroll feed-panel">
-            this is feed
-        </gc-card>
-    </div>
-
-</div>
-
-<div class="row shift-up">
-    <gc-card class="col-xlg-3 col-lg-6 col-md-12 col-sm-12 col-12" title="project.project_productMgr" gcCardClass="xmedium-card feed-comply-panel with-scroll todo-panel">
-        this is todo
-    </gc-card>
-    <gc-card class="col-xlg-6 col-lg-6 col-md-12 col-sm-12 col-12" title="project.project_docmentMgr" gcCardClass="xmedium-card feed-comply-panel with-scroll calendar-panel">
-        this is calendar
-    </gc-card>
 </div>
