@@ -44,6 +44,14 @@ export class AppState {
 export class IModel {
   static iModel = {
 
+    test: {
+      $meta: {
+        $desc: { cn: "testing" },
+        $attributes: {
+          type: "string", macro: { code: 'TEST("isTesting")' },
+        }
+      }
+    },
 
     profile: {
       dashboard: {
@@ -63,7 +71,7 @@ export class IModel {
           $meta: {
             $desc: { cn: "项目描述2" },
             $attributes: { type: "group-ref" },
-            $value: ["project/name", "landConstraints/blocks/no1/area/confiscatedRoad", "cost"]
+            $value: ["project/name", "landConstraints/blocks/no1/area/confiscatedRoad", "cost", "landConstraints/totalNum", "test"]
           }
         }
       }
@@ -95,27 +103,34 @@ export class IModel {
         },
       },
       totalNum: {
-        $desc: { cn: "地块数" },
-        $attributes: {
-          type: "number-int", macro: { code: 'CHILDREN([CURRENT_PATH(),"..","blocks"]).length' },
+        $meta: {
+          $desc: { cn: "地块数" },
+          $attributes: {
+            type: "number-int", macro: { code: 'CHILDREN(CONSTRUCT_PATH([CURRENT_PATH(),"..","blocks"])).length' },
+          }
         }
+
       },
       totalArea: {
         $meta: {
           $desc: { cn: "总用地面积" },
           $attributes: {
-            type: "number-double", macro: { code: 'let blocks=CHILDREN([CURRENT_PATH(),"..","blocks"]);let result=0;for(let i=0;i<blocks.length;i++){}', },
+            type: "number-double", macro: { code: 'let blocks=CHILDREN([CURRENT_PATH(),"..","blocks"]);OPERATOR_NUM(blocks,"add");', },
           }
         }
       },
       blocks: {
         $meta: {
-          $atrributes: {
+          $attributes: {
             type: "group-ref", macro: { code: 'CHILDREN()' }, template: "landConstraints/blocks/no1"
           }
         },
         no1: {
-          $meta: { $desc: { cn: "地块1", en: "no1" }, $options: { tags: { "block-fragment": true } } },
+          $meta: {
+            $desc: { cn: "地块1", en: "no1" }, $attributes: {
+              type: "group-ref", macro: { code: 'CHILDREN()' }, template: "landConstraints/blocks/no1"
+            }
+          },
           name: {
             $meta: {
               $desc: { cn: "土地编号/名称", en: "soil number" },
@@ -127,18 +142,17 @@ export class IModel {
             $meta: {
               $desc: { cn: "总用地面积" },
               $attributes: {
-                type: "macro",
-                unit: { category: "area", value: "亩" }
+                type: "number-double",
+                unit: { category: "area", value: "亩" },
+                macro: { code: 'OPERATOR_SUM(CHILDREN(),"add")' }
               },
-              $value: "SUMCHILDREN()",
-
             },
 
             construction: {
               $meta: {
                 $desc: { cn: "建设用地面积" },
                 $attributes: {
-                  type: "number",
+                  type: "number-double",
                   unit: { category: "area", value: "亩" }
                 },
                 $value: 23,
@@ -271,6 +285,9 @@ export class IModel {
         mockObj.$meta['at']['error'] = "指定路径不存在对象";
         return mockObj;
       }
+      if(!obj.$meta.at){
+        obj.$meta.at={path:propPath};
+      }
       var meta = obj.$meta;
       if (meta && !meta['compile']) {
         self.compile(obj, propPath);
@@ -281,7 +298,9 @@ export class IModel {
 
       self.load(propPath).then(
         function (obj) {
+          obj.$meta['at']=mockObj.$meta.at;
           mockObj.$meta = obj.$meta;
+
 
         }, function (reason) {
           mockObj.$meta['at']['error'] = reason;
@@ -306,6 +325,9 @@ export class IModel {
   filter(obj: any, data: any): any {
     return data;
   }
+  register(path:any,event:string,callback:any){
+
+  }
   compile(obj: any, currentPath: string): any {
     const self = this;
     if (obj.$meta['compile']) return obj;
@@ -313,6 +335,7 @@ export class IModel {
 
     if (obj.$meta.$value) {
       let _value = obj.$meta.$value;
+      delete obj.$meta.$value;
       Object.defineProperty(obj.$meta, '$value',
         {
           get: function () { return self.filter(obj, _value) },
@@ -325,7 +348,7 @@ export class IModel {
         });
       obj.$meta['compile']['compiled'] = true;
 
-    } else if (obj.$meta.$atrributes && obj.$meta.$atrributes.macro) {
+    } else if (obj.$meta.$attributes && obj.$meta.$attributes.macro) {
       var macro: any = obj.$meta.$attributes.macro;
       var dependencies = macro.dependencies;//显性依赖
       if (dependencies && dependencies.length && dependencies.length > 0) {
@@ -336,31 +359,45 @@ export class IModel {
           obj.$meta['compile']['error'] = reason;
         });
       }
+
+      const reason_calculating ={ $reason: "calculating" };
+      const reason_error ={$reason:"error"};
       Object.defineProperty(obj.$meta, '$value', {
         get: function () {
-          if (obj.$meta['compile']['compiled'] !== true)
-            return { $reason: obj.$meta['compile']['error'] ? obj.$meta['compile']['error'] : "loading compiling dependencies" };
-          if (obj.$meta['macro'] && obj.$meta['macro']['status'] !== 'finished') {
-            if (/^error/.test(obj.$meta['macro']['status'])) {
-              return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
-            } else {
-              return { $reason: "calculating" }
-            }
-          }
+ return { $reason: "calculating" };
+          // if (obj.$meta['compile']['compiled'] !== true) return reason_calculating;
+          //   //return { $reason: obj.$meta['compile']['error'] ? obj.$meta['compile']['error'] : "loading compiling dependencies" };
+          // if (!obj.$meta['macro']) {
+          //   obj.$meta['macro'] = { 'status': 'finished' };
+          // };
+          // if (obj.$meta['macro']['status'] !== 'finished') {
+          //   if (/^error/.test(obj.$meta['macro']['status'])) {
+          //     return reason_error;
+          //     //return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
+          //   } else {
+          //     return reason_calculating;
+          //   }
+          // };
 
-          try {
-            var result = self.execMacro(obj);
-            return self.filter(obj, result);
-          } catch (e) {
-            if (/^error/.test(obj.$meta['macro']['status'])) {
-              return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
-            } else {
-              return { $reason: "calculating" }
-            }
-          }
+          // try {
+          //   var result = self.execMacro(obj);
+         
+
+          //   return self.filter(obj, result);
+          // } catch (e) {
+          //   if (/^error/.test(obj.$meta['macro']['status'])) {
+          //     return reason_error;
+          //     //return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
+          //   } else {
+          //     return reason_calculating;
+          //   }
+          // }
 
         }
       });
+
+      obj.$meta['compile']['compiled'] = true;
+
     }
     else {
       obj.$meta['compile'] = { compiled: true, };
@@ -399,9 +436,16 @@ export class IModel {
   };
   execMacro(context: any): any {
     const self = this;
-    const code = context.$meta.$atrributes.macro.code;
+    const code = context.$meta.$attributes.macro.code;
     const path = context.$meta['at']['path'];
-    context.$meta.macro = { status: 'starting' }
+    function TEST(prompt: string): string {
+      if (context.$meta.macro['status'] !== "finished") throw { reason: "nofinished" };
+      context.$meta.macro['status'] = "starting"
+      context.$meta.macro['status'] = "finished"
+
+      return prompt;
+
+    }
     function CHILDREN(subPath?: string) {
       if (context.$meta.macro['status'] !== "finished") throw { reason: "nofinished" };
       context.$meta.macro['status'] = "starting"
@@ -472,7 +516,7 @@ export class IModel {
       context.$meta.macro['status'] = "starting";
       switch (operator) {
         case 'add':
-  
+
           if (!opers || (opers.length && opers.length === 0)) return 0;
           var dependencies: Promise<any>[] = [];
           for (let i = 0; i < opers.length; i++) {
@@ -491,7 +535,7 @@ export class IModel {
             throw { reason: "loading" };
           }
 
-          const unit = self.at(opers[0]).$atrributes.unit;
+          const unit = self.at(opers[0]).$attributes.unit;
           var sum = 0;
           var waitings: Promise<any>[] = [];
           for (let i = 0; i < opers.length; i++) {

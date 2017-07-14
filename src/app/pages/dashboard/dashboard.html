@@ -4,7 +4,7 @@
         </leaflet-maps>
     </gc-card>
 
-    <gc-card *ngFor="let panel of panels" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" title={{panel.$desc.cn}} gcCardClass=" medium-card with-scroll">
+    <gc-card *ngFor="let panel of panels()" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" title={{panel.$meta.$desc.cn}} gcCardClass=" medium-card with-scroll">
         <gc-form [data]="panel"></gc-form>
     </gc-card>
 

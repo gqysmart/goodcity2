@@ -8,28 +8,28 @@ import { IModel } from '../../app.service';
   templateUrl: './dashboard.html'
 })
 export class Dashboard {
-  panels: object[] = [];
+ 
   constructor(public imodel: IModel) {
 
   };
 
   ngOnInit() {
     var self = this;
-    var getPanels = this.imodel.at('profile/dashboard');
-    getPanels.then(function ($meta) {
-      switch ($meta.$attributes.type) {
-        case "group-ref":
-          for (let i = 0; i < $meta.$value.length; i++) {
-            self.imodel.at($meta.$value[i]).then(function (obj) {
-              self.panels.push(obj);
-            });
-          }
-          break;
-      }
-
-    });
-
+   
   };
+
+  panels(): any[] {
+    const self = this;
+    var result: any[] = [];
+    var obj = this.imodel.at('profile/dashboard');
+    for (let i = 0; i < obj.$meta.$value.length; i++) {
+      result.push(self.imodel.at(obj.$meta.$value[i]));
+    };
+
+    return result;
+  }
+    
+  
 
 
 

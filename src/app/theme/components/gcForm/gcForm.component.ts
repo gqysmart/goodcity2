@@ -8,29 +8,40 @@ import {IModel} from '../../../app.service';
   styleUrls: ['./gcForm.scss']
 })
 export class GcForm {
-  controls:any[]=[];
+
   constructor(public imodel:IModel) {
     
   }
   @Input() data:any;
-  
-  ngOnInit(){
-    var self = this;
-    switch(self.data.$attributes.type){
-      case 'group-ref':
-      for(let i=0;i<self.data.$value.length;i++){
-        self.imodel.at(self.data.$value[i]).then(function(obj){
-          self.controls.push(obj);
-        })
-      }
-      break;
 
-
-
-
-    }
-    
+  controls():any[]{
+    const self = this;
+    var result:any[] =[];
+    for (let i = 0; i < self.data.$meta.$value.length; i++) {
+      var obj = self.imodel.at(self.data.$meta.$value[i]);
+      result.push(obj);
+    };
+    return result;
   }
 
+  checkTypeAndValue(obj:any):boolean{
+
+    if(this.isObjectValue(obj)){
+      if(typeof obj.$meta.$value === 'object') return false;
+    }
+    
+    return true;
+  }
+  isObjectValue(obj:any):boolean{
+    return !/^number|string|currency/.test(obj.$meta.$attributes.type);
+  }
+
+  ngOnInit() {
+    var self = this;
+
+
+  }
 
 }
+
+
