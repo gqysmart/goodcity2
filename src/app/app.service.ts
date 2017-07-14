@@ -58,20 +58,20 @@ export class IModel {
         $meta: {
           $desc: { cn: "控制台" },
           $attributes: { type: "group-ref" },
-          $value: ["profile/dashboard/projectSummary", "profile/dashboard/projectSummary2"],
+          $value: ["profile/dashboard/projectSummary", "profile/dashboard/landConstraints"],
         },
         projectSummary: {
           $meta: {
             $desc: { cn: "项目描述" },
             $attributes: { type: "group-ref" },
-            $value: ["project/name", "landConstraints"]
+            $value: ["project/name",]
           }
         },
-        projectSummary2: {
+        landConstraints: {
           $meta: {
-            $desc: { cn: "项目描述2" },
+            $desc: { cn: "土地使用约定" },
             $attributes: { type: "group-ref" },
-            $value: ["project/name", "landConstraints/blocks/no1/area/confiscatedRoad", "cost", "landConstraints/totalNum", "test"]
+            $value: ["landConstraints/blocks/no1/name", "landConstraints/blocks/no1/area", "landConstraints/blocks/no1/area/construction", "landConstraints/blocks/no1/area/confiscatedRoad", "landConstraints/blocks/no1/area/","landConstraints/blocks/no1/area/expropriatedGreenLand","test"]
           }
         }
       }
@@ -99,7 +99,7 @@ export class IModel {
       $meta: {
         $desc: { cn: "土地限定条件", en: "soil number" },
         $attributes: {
-          type: "group-ref", macro: { code: 'CHILDREN("blocks")', },
+          type: "group-ref", macro: { code: 'CHILDREN(CONSTRUCT_PATH([CURRENT_PATH(),"blocks"]))', },
         },
       },
       totalNum: {
@@ -109,13 +109,12 @@ export class IModel {
             type: "number-int", macro: { code: 'CHILDREN(CONSTRUCT_PATH([CURRENT_PATH(),"..","blocks"])).length' },
           }
         }
-
       },
       totalArea: {
         $meta: {
           $desc: { cn: "总用地面积" },
           $attributes: {
-            type: "number-double", macro: { code: 'let blocks=CHILDREN([CURRENT_PATH(),"..","blocks"]);OPERATOR_NUM(blocks,"add");', },
+            type: "number-double", macro: { code: 'let blocks=CHILDREN([CURRENT_PATH(),"..","blocks"]);OPERATOR_NUM("add",blocks);', },
           }
         }
       },
@@ -134,9 +133,10 @@ export class IModel {
           name: {
             $meta: {
               $desc: { cn: "土地编号/名称", en: "soil number" },
+              $attributes: { type: "string", },
+              $value: "xxxxx",
             },
-            $attributes: { type: "string", },
-            $value: "xxxxx",
+
           },
           area: {
             $meta: {
@@ -144,7 +144,7 @@ export class IModel {
               $attributes: {
                 type: "number-double",
                 unit: { category: "area", value: "亩" },
-                macro: { code: 'OPERATOR_SUM(CHILDREN(),"add")' }
+                macro: { code: 'OPERATOR_NUM("add",CHILDREN())' }
               },
             },
 
@@ -364,34 +364,34 @@ export class IModel {
       const reason_error ={$reason:"error"};
       Object.defineProperty(obj.$meta, '$value', {
         get: function () {
- return { $reason: "calculating" };
-          // if (obj.$meta['compile']['compiled'] !== true) return reason_calculating;
-          //   //return { $reason: obj.$meta['compile']['error'] ? obj.$meta['compile']['error'] : "loading compiling dependencies" };
-          // if (!obj.$meta['macro']) {
-          //   obj.$meta['macro'] = { 'status': 'finished' };
-          // };
-          // if (obj.$meta['macro']['status'] !== 'finished') {
-          //   if (/^error/.test(obj.$meta['macro']['status'])) {
-          //     return reason_error;
-          //     //return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
-          //   } else {
-          //     return reason_calculating;
-          //   }
-          // };
+          
+          if (obj.$meta['compile']['compiled'] !== true) return reason_calculating;
+            //return { $reason: obj.$meta['compile']['error'] ? obj.$meta['compile']['error'] : "loading compiling dependencies" };
+          if (!obj.$meta['macro']) {
+            obj.$meta['macro'] = { 'status': 'finished' };
+          };
+          if (obj.$meta['macro']['status'] !== 'finished') {
+            if (/^error/.test(obj.$meta['macro']['status'])) {
+              return reason_error;
+              //return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
+            } else {
+              return reason_calculating;
+            }
+          };
 
-          // try {
-          //   var result = self.execMacro(obj);
+          try {
+            var result = self.execMacro(obj);
          
 
-          //   return self.filter(obj, result);
-          // } catch (e) {
-          //   if (/^error/.test(obj.$meta['macro']['status'])) {
-          //     return reason_error;
-          //     //return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
-          //   } else {
-          //     return reason_calculating;
-          //   }
-          // }
+            return self.filter(obj, result);
+          } catch (e) {
+            if (/^error/.test(obj.$meta['macro']['status'])) {
+              return reason_error;
+              //return { $reason: obj.$meta['macro']['error'] ? obj.$meta['macro']['error'] : "macro error" };
+            } else {
+              return reason_calculating;
+            }
+          }
 
         }
       });
@@ -435,9 +435,9 @@ export class IModel {
 
   };
   execMacro(context: any): any {
-    const self = this;
-    const code = context.$meta.$attributes.macro.code;
-    const path = context.$meta['at']['path'];
+    const $self = this;
+    const $code = context.$meta.$attributes.macro.code;
+    const $atPath = context.$meta['at']['path'];
     function TEST(prompt: string): string {
       if (context.$meta.macro['status'] !== "finished") throw { reason: "nofinished" };
       context.$meta.macro['status'] = "starting"
@@ -446,18 +446,17 @@ export class IModel {
       return prompt;
 
     }
-    function CHILDREN(subPath?: string) {
+    function CHILDREN(path?: string) {
       if (context.$meta.macro['status'] !== "finished") throw { reason: "nofinished" };
       context.$meta.macro['status'] = "starting"
       var result: string[] = [];
-      var currentPath = path;
-      if (subPath) {
-        currentPath = currentPath + '/' + subPath;
+      if (!path) {
+        path = context.$meta.at.path;
       }
-      var obj = self.at(currentPath);
+      var obj = $self.at(path);
       for (let key in obj) {
         if (key !== '$meta') {
-          result.push(currentPath + "/" + key);
+          result.push(path + "/" + key);
         }
       }
       context.$meta.macro['status'] = "finished"
@@ -499,7 +498,7 @@ export class IModel {
     function CURRENT_PATH() {
       if (context.$meta.macro['status'] !== "finished") throw { reason: "nofinished" };
       context.$meta.macro['status'] = "starting"
-      var result = path;
+      var result = $atPath;
       context.$meta.macro['status'] = "finished";
       return result;
     };
@@ -520,7 +519,7 @@ export class IModel {
           if (!opers || (opers.length && opers.length === 0)) return 0;
           var dependencies: Promise<any>[] = [];
           for (let i = 0; i < opers.length; i++) {
-            if (!self.hasLoaded(opers[i])) { dependencies.push(self.load(opers[i])); }
+            if (!$self.hasLoaded(opers[i])) { dependencies.push($self.load(opers[i])); }
           }
           if (dependencies.length > 0) {
             context.$meta.macro['status'] = "loadingDependencies";
@@ -535,11 +534,11 @@ export class IModel {
             throw { reason: "loading" };
           }
 
-          const unit = self.at(opers[0]).$attributes.unit;
+          const unit = $self.at(opers[0]).$meta.$attributes.unit;
           var sum = 0;
           var waitings: Promise<any>[] = [];
           for (let i = 0; i < opers.length; i++) {
-            let obj = self.at(opers[i]);
+            let obj = $self.at(opers[i]);
             if (obj.mock) {
               context.$meta.macro['status'] = 'error-path-notexist';
               context.$meta.macro['error'] = 'path ' + opers[i] + ' notexist'
@@ -603,7 +602,7 @@ export class IModel {
 
     }
     try {
-      var result = eval(code);
+      var result = eval($code);
       return result;
     } catch (e) {
       throw e;

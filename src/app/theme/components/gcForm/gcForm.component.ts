@@ -24,16 +24,18 @@ export class GcForm {
     return result;
   }
 
-  checkTypeAndValue(obj:any):boolean{
+  checkTypeAndValueAccordance(obj:any):boolean{
 
-    if(this.isObjectValue(obj)){
-      if(typeof obj.$meta.$value === 'object') return false;
-    }
-    
-    return true;
+    if(this.isObjectType(obj) && this.isObjectValue(obj)) return true;
+    if(!this.isObjectType(obj) && !this.isObjectValue(obj)) return true;
+    return false;
   }
-  isObjectValue(obj:any):boolean{
+  isObjectType(obj:any):boolean{
     return !/^number|string|currency/.test(obj.$meta.$attributes.type);
+  };
+  isObjectValue(obj:any):boolean{
+    if(typeof obj.$meta.$value === 'object') return true;
+    return false;
   }
 
   ngOnInit() {
