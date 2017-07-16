@@ -5,15 +5,15 @@
             <div *ngIf="!isObjectType(control)">
                 <div class="form-group">
 
-                    <div *ngIf="control.$meta.$attributes.unit && control.$meta.$attributes.unit.value">
+                    <div *ngIf="control.$meta.$attributes.unit">
                         <label for={{control.$meta.$desc.cn}}{{ix}}>{{control.$meta.$desc.cn}}</label>
                         <div class="input-group">
-                            <span *ngIf="control.$meta.$attributes.unit.category == 'currency'" class="input-group-addon addon-left input-group-addon-success">¥</span>
+                            <span *ngIf="control.$meta.$attributes.type === 'number-currency'" class="input-group-addon addon-left input-group-addon-success">¥</span>
                             <input type="text" class="form-control with-primary-addon" [disabled]="control.$meta.$attributes.macro" [(ngModel)]="control.$meta.$value" id={{control.$meta.$desc.cn}}{{ix}} name={{control.$meta.$desc.cn}}{{ix}}>
-                            <span class="input-group-addon addon-right input-group-addon-primary">{{control.$meta.$attributes.unit.value}}</span>
+                            <span class="input-group-addon addon-right input-group-addon-primary">{{control.$meta.$attributes.unit}}</span>
                         </div>
                     </div>
-                    <div *ngIf="!control.$meta.$attributes.unit || !control.$meta.$attributes.unit.value">
+                    <div *ngIf="!control.$meta.$attributes.unit">
                         <label for={{control.$meta.$desc.cn}}{{ix}}>{{control.$meta.$desc.cn}}</label>
                         <input type="text" class="form-control" [disabled]="control.$meta.$attributes.macro" [(ngModel)]="control.$meta.$value" id={{control.$meta.$desc.cn}}{{ix}} name={{control.$meta.$desc.cn}}{{ix}}>
 
