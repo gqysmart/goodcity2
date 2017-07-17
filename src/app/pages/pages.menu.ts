@@ -15,7 +15,7 @@ export const PAGES_MENU = [
         }
       },
       {
-        path: 'rules',
+        path: 'iModelEditor',
         data: {
           menu: {
             title: 'project.project_constraint_rules',
@@ -27,7 +27,7 @@ export const PAGES_MENU = [
         },
          children: [
           {
-            path: 'goverment',
+            path: 'rules.goverment',
             data: {
               menu: {
                 title: 'general.government',
@@ -35,7 +35,7 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'group',
+            path: 'rules.group',
             data: {
               menu: {
                 title: 'general.group',
@@ -43,7 +43,7 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'custom',
+            path: 'rules.custom',
             data: {
               menu: {
                 title: 'general.custom',
@@ -53,7 +53,7 @@ export const PAGES_MENU = [
         ]
       },
       {
-        path: 'planMgr',
+        path: 'iModelEditor',
         data: {
           menu: {
             title: 'project.project_planMgr',
@@ -63,19 +63,19 @@ export const PAGES_MENU = [
             order: 100,
           }
         },
-        // children: [
-        //   {
-        //     path: 'ckeditor',
-        //     data: {
-        //       menu: {
-        //         title: 'general.menu.ck_editor',
-        //       }
-        //     }
-        //   }
-        // ]
+         children: [
+          {
+            path: 'plans',
+            data: {
+              menu: {
+                title: 'general.government',
+              }
+            }
+          },]
+        
       },
       {
-        path: 'operatorMgr',
+        path: 'iModelEditor',
         data: {
           menu: {
             title: 'project.project_operatorMgr',
@@ -87,7 +87,7 @@ export const PAGES_MENU = [
         },
          children: [
           {
-            path: 'scheduleMgr',
+            path: 'operatorMgr.scheduleMgr',
             data: {
               menu: {
                 title: 'project.project_scheduleMgr',
@@ -95,7 +95,7 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'adminMgr',
+            path: 'operatorMgr.adminMgr',
             data: {
               menu: {
                 title:'project.project_adminMgr',
@@ -103,7 +103,7 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'departmentMgr',
+            path: 'operatorMgr.departmentMgr',
             data: {
               menu: {
                 title: 'project.project_departmentMgr',
@@ -114,7 +114,7 @@ export const PAGES_MENU = [
         ]
       },
       {
-        path: 'docMgr',
+        path: 'iModelEditor',
         data: {
           menu: {
             title: 'project.project_docmentMgr',
@@ -126,7 +126,7 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'category',
+            path: 'docMgr.category',
             data: {
               menu: {
                 title: 'general.category',
@@ -137,7 +137,7 @@ export const PAGES_MENU = [
         ]
       },
       {
-        path: 'setup',
+        path: 'iModelEditor',
         data: {
           menu: {
             title: 'project.project_dev_parameters',
@@ -149,7 +149,7 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'costSetup',
+            path: 'setup.costSetup',
             data: {
               menu: {
                 title: 'parameters.parameters_cost',
@@ -157,7 +157,7 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'designSetup',
+            path: 'setup.designSetup',
             data: {
               menu: {
                 title: 'parameters.parameters_design',
@@ -167,184 +167,8 @@ export const PAGES_MENU = [
          
         ]
       },
-      // {
-      //   path: 'forms',
-      //   data: {
-      //     menu: {
-      //       title: 'general.menu.form_elements',
-      //       icon: 'ion-compose',
-      //       selected: false,
-      //       expanded: false,
-      //       order: 400,
-      //     }
-      //   },
-      //   children: [
-      //     {
-      //       path: 'inputs',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.form_inputs',
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: 'layouts',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.form_layouts',
-      //         }
-      //       }
-      //     }
-      //   ]
-      // },
-      // {
-      //   path: 'tables',
-      //   data: {
-      //     menu: {
-      //       title: 'general.menu.tables',
-      //       icon: 'ion-grid',
-      //       selected: false,
-      //       expanded: false,
-      //       order: 500,
-      //     }
-      //   },
-      //   children: [
-      //     {
-      //       path: 'basictables',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.basic_tables',
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: 'smarttables',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.smart_tables',
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: 'datatables',
-      //       data: {
-      //         menu: {
-      //           title: 'Data Tables',
-      //         }
-      //       }
-      //     },
-      //      {
-      //        path: 'hottables',
-      //        data: {
-      //          menu: {
-      //            title: 'Hot Tables',
-      //          }
-      //        }
-      //      }
-      //   ]
-      // },
-      // {
-      //   path: 'maps',
-      //   data: {
-      //     menu: {
-      //       title: 'general.menu.maps',
-      //       icon: 'ion-ios-location-outline',
-      //       selected: false,
-      //       expanded: false,
-      //       order: 600,
-      //     }
-      //   },
-      //   children: [
-      //     {
-      //       path: 'googlemaps',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.google_maps',
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: 'leafletmaps',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.leaflet_maps',
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: 'bubblemaps',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.bubble_maps',
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: 'linemaps',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.line_maps',
-      //         }
-      //       }
-      //     }
-      //   ]
-      // },
-     
-      // {
-      //   path: '',
-      //   data: {
-      //     menu: {
-      //       title: 'general.menu.menu_level_1',
-      //       icon: 'ion-ios-more',
-      //       selected: false,
-      //       expanded: false,
-      //       order: 700,
-      //     }
-      //   },
-      //   children: [
-      //     {
-      //       path: '',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.menu_level_1_1',
-      //           url: '#'
-      //         }
-      //       }
-      //     },
-      //     {
-      //       path: '',
-      //       data: {
-      //         menu: {
-      //           title: 'general.menu.menu_level_1_2',
-      //           url: '#'
-      //         }
-      //       },
-      //       children: [
-      //         {
-      //           path: '',
-      //           data: {
-      //             menu: {
-      //               title: 'general.menu.menu_level_1_2_1',
-      //               url: '#'
-      //             }
-      //           }
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
-      // {
-      //   path: '',
-      //   data: {
-      //     menu: {
-      //       title: 'general.menu.external_link',
-      //       url: 'http://akveo.com',
-      //       icon: 'ion-android-exit',
-      //       order: 800,
-      //       target: '_blank'
-      //     }
-      //   }
-      // }
+      
+    
     ]
   }
 ];

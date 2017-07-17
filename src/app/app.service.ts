@@ -52,6 +52,67 @@ export class IModel {
         }
       }
     },
+    "code.plan.vehicle.jiangsu.v2017": {
+      $meta: {
+        $desc: { cn: "江苏省规划管理条例" }
+      },
+      landUseEnum: {
+        $meta: { $desc: { cn: "土地性质" } },
+        R1: {
+          $meta: {
+            $desc: { cn: "R1:别墅用地", refs: { "设计规范": "R1" } }
+          }
+        },
+        R2: {
+          $meta: {
+            $desc: { cn: "R2:住宅用地" }
+          }
+        }
+      },
+      motorParkNum: {
+        $meta: {
+          $desc: { cn: "应需总机动车车位" },
+          $attributes: {
+            type: "number-int", macro: { code: '' }
+          }
+        },
+        largeScaleMotor: {
+          $meta: {
+            $desc: { cn: "应需大型汽车车位" },
+            $attributes: {
+              type: "number-int", macro: { code: '' }
+            }
+          }
+        },
+        middleScaleMotor: {
+          $meta: {
+            $desc: { cn: "应需中型汽车车位" },
+            $attributes: {
+              type: "number-int", macro: { code: '' }
+            }
+          }
+        },
+        smallScaleMotor: {
+          $meta: {
+            $desc: { cn: "应需小型汽车车位" },
+            $attributes: {
+              type: "number-int", macro: { code: '' }
+            }
+          }
+        }
+      },
+      nonMotorParkNum: {
+        $meta: {
+          $desc: { cn: "应需总非机动车车位" },
+          $attributes: {
+            type: "number-int", macro: { code: '' }
+          }
+        },
+
+
+      }
+
+    },
 
     profile: {
       dashboard: {
@@ -71,7 +132,7 @@ export class IModel {
           $meta: {
             $desc: { cn: "土地使用约定" },
             $attributes: { type: "group-ref" },
-            $value: ["landConstraints/blocks/no1/name", "landConstraints/blocks/no1/area", "landConstraints/blocks/no1/area/construction", "landConstraints/blocks/no1/area/confiscatedRoad", "landConstraints/blocks/no1/area/", "landConstraints/blocks/no1/area/expropriatedGreenLand", "landConstraints/blocks/no1/maxVolumeArea","test"]
+            $value: ["landConstraints/blocks/no1/name", "landConstraints/blocks/no1/area", "landConstraints/blocks/no1/area/construction", "landConstraints/blocks/no1/area/confiscatedRoad", "landConstraints/blocks/no1/area/", "landConstraints/blocks/no1/area/expropriatedGreenLand", "landConstraints/blocks/no1/maxVolumeArea", "test"]
           }
         }
       }
@@ -114,7 +175,7 @@ export class IModel {
         $meta: {
           $desc: { cn: "总用地面积" },
           $attributes: {
-            type: "number-double", macro: { code: 'let blocks=PATH_CONSTRUCT([PATH_CHILDREN([PATH_CURRENT(),"..","blocks"]),"area"];OPERATOR_SUM(blocks);', },
+            type: "number-double", macro: { code: 'let blocks=PATH_CONSTRUCT([PATH_CHILDREN([PATH_CURRENT(),"..","blocks"]),"area"];OPERATOR("sum",blocks);', },
           }
         }
       },
@@ -138,10 +199,27 @@ export class IModel {
             },
 
           },
+           planUse: {
+            $meta: {
+              $desc: { cn: "土地性质" },
+              $attributes: {
+                type: "enum-string", enum: "code.plan.vehicle.jiangsu.v2017/landUseEnum"
+              },
+              $value: "R1"
+            }
+          },
+
+          landTransferringFees: {
+            $meta: {
+              $desc: { cn: "土地出让金" },
+              $attributes: { type: "number-double", unit: "亿元" },
+              $value: 0
+            }
+          },
           maxVolumeArea: {
             $meta: {
               $desc: { cn: "地块最大计容面积" },
-              $attributes: { type: "number-double", unit: "平方米", macro: { code: 'OPERATOR_MULTI([INTERVAL_MAX(PATH_CONSTRUCT([PATH_PARENT(),"ratio"])),PATH_CONSTRUCT([PATH_PARENT(),"area"])])' } },
+              $attributes: { type: "number-double", unit: "平方米", macro: { code: 'OPERATOR("multi",[INTERVAL(‘min’，PATH_CONSTRUCT([PATH_PARENT(),"ratio"])),PATH_CONSTRUCT([PATH_PARENT(),"area"])])' } },
             }
           },
           area: {
@@ -152,7 +230,7 @@ export class IModel {
                 validators: { check: {}, custom: {} },
                 type: "number-double",
                 unit: "公顷",
-                macro: { code: 'OPERATOR_SUM(PATH_CHILDREN())', custom: {} }
+                macro: { code: 'OPERATOR("sum",PATH_CHILDREN())', custom: {} }
               },
             },
 
@@ -165,7 +243,6 @@ export class IModel {
                 },
                 $value: 23,
               }
-
             },
             confiscatedRoad: {
               $meta: {
@@ -176,7 +253,6 @@ export class IModel {
                 },
                 $value: 0,
               }
-
             },
             expropriatedGreenLand: {
               $meta: {
@@ -190,13 +266,7 @@ export class IModel {
 
             }
           },
-          ratio: {
-            $meta: {
-              $attributes: { type: "interval-number", },
-              $desc: { cn: "容积率", en: "project name" },
-              $value: { upperLimit: { value: 8.0, open: true }, lowerLimit: { value: 0, open: false } }
-            }
-          },
+
           location: {
             $meta: {
               $attributes: { type: "location", },
@@ -208,11 +278,69 @@ export class IModel {
             }
 
           },
+          developmentIntensity: {
+            $meta: {
+              $desc: { cn: "开发强度要求" }
+            },
+            ratio: {
+              $meta: {
+                $attributes: { type: "interval-number", },
+                $desc: { cn: "容积率要求", en: "project name" },
+                $value: { upperLimit: { value: 8.0, open: true }, lowerLimit: { value: 0, open: false } }
+              },
+              greenRate: {
+                $meta: {
+                  $desc: { cn: "绿化率" },
+                  $attributes: {
+                    type: "interval-number", unit: "%"
+                  },
+                  $value: { upperLimit: { value: 100, open: true }, lowerLimit: { value: 20.0, open: false } }
+                }
+              },
+              buildingDensity: {
+                $meta: {
+                  $desc: { cn: "建筑密度" },
+                  $attributes: {
+                    type: "interval-number", unit: "%"
+                  },
+                  $value: { upperLimit: { value: 25.0, open: false }, lowerLimit: { value: 0, open: true } }
+                }
+              },
+                buildingAltitude: {
+                $meta: {
+                  $desc: { cn: "建筑高度" },
+                  $attributes: {
+                    type: "interval-number", unit: "米"
+                  },
+                  $value: { upperLimit: { value: 200, open: false }, lowerLimit: { value: 0, open: false } }
+                }
+              },
+
+
+            },
+
+          },
+          supportingFacility:{
+             $meta: {
+              $desc: { cn: "公建配套设施要求" }
+            },
+            forProperty:{
+              $meta:{
+                $desc:{cn:"物业管理用房面积"},
+                $attributes:{type:"number-double",unit:"平方米"},
+                $value:0
+              }
+            },publicFacilities:{
+              $meta:{
+                $desc:{cn:"市政设施"},
+                $attributes:{type:"number-double",unit:"平方米"},
+                $value:0
+              }
+            }
+          }
         },
 
       }
-
-
     },
   };
   static iCache = {
@@ -418,7 +546,6 @@ export class IModel {
     }
     return obj;
   };
-
   getByHttp(prop: string, missing?: string): Promise<any> {
     var result: Promise<any> = new Promise(function (resolve, reject) {
       setTimeout(function () {
@@ -459,15 +586,15 @@ export class IModel {
       currency: { "元": 1, "万元": 10000, "亿元": 100000000, }
       , length: { "米": 1, "厘米": 1 / 100, "分米": 1 / 10, '毫米': 1 / 1000, },
       area: { '平方米': 1, "公顷": 10000, '亩': 10000 / 15, },
-      $normal:{'':1,'%':1/100,'‰':1/1000}
+      $normal: { '': 1, '%': 1 / 100, '‰': 1 / 1000 }
     };
-   
+
     if (baseRelations["$normal"].hasOwnProperty(sourceUnit)) {
       if (!baseRelations['$normal'].hasOwnProperty(destinationUnit)) {
         return baseRelations["$normal"][sourceUnit] * obj;
       }
     }
-//
+    //
     var matchedCategory;
     for (let key in baseRelations) {
       if (baseRelations[key].hasOwnProperty(destinationUnit)) {
@@ -493,13 +620,13 @@ export class IModel {
     const $atPath = context.$meta['at']['path'];
     const $waitings: Promise<any>[] = [];
 
-    try{
+    try {
       let macroInnerValue = eval($code);
-      if(macroInnerValue && macroInnerValue['$$result']){
-       return $self.unitValueTransform(macroInnerValue['$$result'],macroInnerValue['$$unit'],$unit);
+      if (macroInnerValue && macroInnerValue['$$result']) {
+        return $self.unitValueTransform(macroInnerValue['$$result'], macroInnerValue['$$unit'], $unit);
       }
-     return macroInnerValue;
-    }catch(e){
+      return macroInnerValue;
+    } catch (e) {
       throw e;
     }
 
@@ -535,7 +662,7 @@ export class IModel {
         context.$meta.macro['status'] = "finished";
         return $atPath;
       }
-      var origins:any = seqs[0];
+      var origins: any = seqs[0];
       var returnArray = true;
       if (!(typeof seqs[0] === 'object')) {
         returnArray = false;
@@ -605,7 +732,22 @@ export class IModel {
     function OPERATOR_ZERO() {
       return { $$result: 0, $$type: "number-double" };
     }
-    function OPERATOR_SUM(opers: any[]) {
+    function OPERATOR(method: string, opers: any[]) {
+      try {
+        switch (method) {
+          case "sum": return $$OPERATOR_SUM(opers);
+          case "multi": return $$OPERATOR_MULTI(opers);
+          case "minus": return $$OPERATOR_MINUS(opers);
+          case "divide": return $$OPERATOR_DIVIDE(opers);
+          default:
+            throw "no method";
+        }
+      }
+      catch (e) {
+        throw e;
+      }
+    }
+    function $$OPERATOR_SUM(opers: any[]) {
       try {
         $$macroHeader(opers);
 
@@ -621,12 +763,12 @@ export class IModel {
         var unit = calcObject["$$unit"];
         if (!lastRst) {
           sum = 0;
-          targetUnit = calcObject["$$unit"]?calcObject["$$unit"]:"" ;
+          targetUnit = calcObject["$$unit"] ? calcObject["$$unit"] : "";
           currencyType = calcObject["$$type"];
 
         } else {
           sum = lastRst['$$result'];
-          targetUnit = lastRst['$$unit']?lastRst['$$unit']:"";
+          targetUnit = lastRst['$$unit'] ? lastRst['$$unit'] : "";
           currencyType = lastRst["$$type"];
         }
 
@@ -658,9 +800,9 @@ export class IModel {
 
       }
 
-    }; 
-    
-    function OPERATOR_MULTI(opers: any[]) {
+    };
+
+    function $$OPERATOR_MULTI(opers: any[]) {
       try {
         $$macroHeader(opers);
 
@@ -674,14 +816,14 @@ export class IModel {
         var currencyType;
         var value = calcObject["$$result"];
         var unit = calcObject["$$unit"];
-       if (!lastRst) {
+        if (!lastRst) {
           sum = 1;
-          targetUnit = calcObject["$$unit"]?calcObject["$$unit"]:"" ;
+          targetUnit = calcObject["$$unit"] ? calcObject["$$unit"] : "";
           currencyType = calcObject["$$type"];
 
         } else {
           sum = lastRst['$$result'];
-          targetUnit = lastRst['$$unit']?lastRst['$$unit']:"";
+          targetUnit = lastRst['$$unit'] ? lastRst['$$unit'] : "";
           currencyType = lastRst["$$type"];
         }
 
@@ -700,7 +842,7 @@ export class IModel {
         else {
           try {
             sum *= Number(value);
-            targetUnit +=  unit ? unit : '';//暂时以double精度计算。
+            targetUnit += unit ? unit : '';//暂时以double精度计算。
 
           }
           catch (e) {
@@ -715,7 +857,7 @@ export class IModel {
       }
 
     };
-    function OPERATOR_MINUS(opers: any[]) {
+    function $$OPERATOR_MINUS(opers: any[]) {
       try {
         $$macroHeader(opers);
 
@@ -731,12 +873,12 @@ export class IModel {
         var unit = calcObject["$$unit"];
         if (!lastRst) {
           sum = 0;
-          targetUnit = calcObject["$$unit"]?calcObject["$$unit"]:"" ;
+          targetUnit = calcObject["$$unit"] ? calcObject["$$unit"] : "";
           currencyType = calcObject["$$type"];
 
         } else {
           sum = lastRst['$$result'];
-          targetUnit = lastRst['$$unit']?lastRst['$$unit']:"";
+          targetUnit = lastRst['$$unit'] ? lastRst['$$unit'] : "";
           currencyType = lastRst["$$type"];
         }
 
@@ -756,7 +898,7 @@ export class IModel {
         else {
           try {
             sum *= index === 0 ? Number(value) : 1 / Number(value);
-            targetUnit +=  unit ? '/' + unit : '';//暂时以double精度计算。
+            targetUnit += unit ? '/' + unit : '';//暂时以double精度计算。
           }
           catch (e) {
             context.$meta.macro['status'] = "error-unit-notmatched";
@@ -770,8 +912,7 @@ export class IModel {
 
 
     };
-
-    function OPERATOR_DIVIDE(opers: any[]) {
+    function $$OPERATOR_DIVIDE(opers: any[]) {
       try {
         $$macroHeader(opers);
 
@@ -787,19 +928,19 @@ export class IModel {
         var unit = calcObject["$$unit"];
         if (!lastRst) {
           sum = 1;
-          targetUnit = calcObject["$$unit"]?calcObject["$$unit"]:"" ;
+          targetUnit = calcObject["$$unit"] ? calcObject["$$unit"] : "";
           currencyType = calcObject["$$type"];
 
         } else {
           sum = lastRst['$$result'];
-          targetUnit = lastRst['$$unit']?lastRst['$$unit']:"";
+          targetUnit = lastRst['$$unit'] ? lastRst['$$unit'] : "";
           currencyType = lastRst["$$type"];
         }
 
         if (targetUnit === 'number-currency') {//精确计算
           try {
             sum *= index === 0 ? Number(value) : 1 / Number(value);
-            targetUnit +=  unit ? '/' + unit : '';//暂时以double精度计算。
+            targetUnit += unit ? '/' + unit : '';//暂时以double精度计算。
           }
           catch (e) {
             context.$meta.macro['status'] = "error-unit-notmatched";
@@ -827,7 +968,19 @@ export class IModel {
 
 
     };
-    function INTERVAL_MIN(path: string) {
+    function INTERVAL(method: string, path: string) {
+      try {
+        switch (method) {
+          case 'min': return $$INTERVAL_MIN(path);
+          case 'max': return $$INTERVAL_MAX(path);
+          case 'random': return $$INTERVAL_RANDOM(path);
+        }
+
+      } catch (e) {
+        throw e;
+      }
+    }
+    function $$INTERVAL_MIN(path: string) {
       try {
         $$macroHeader(path);
 
@@ -836,11 +989,11 @@ export class IModel {
         throw e;
       }
       function routine(calcObject: any, lastRst: any) {
-         calcObject['$$result'] = calcObject['$$result']['lowerLimit']['value'];
-return calcObject;
+        calcObject['$$result'] = calcObject['$$result']['lowerLimit']['value'];
+        return calcObject;
       };
     };
-    function INTERVAL_MAX(path: string) {
+    function $$INTERVAL_MAX(path: string) {
       try {
         $$macroHeader(path);
 
@@ -850,10 +1003,10 @@ return calcObject;
       }
       function routine(calcObject: any, lastRst: any) {
         calcObject['$$result'] = calcObject['$$result']['upperLimit']['value'];
-return calcObject;
+        return calcObject;
       };
     };
-    function INTERVAL_RANDOM(path: string) {
+    function $$INTERVAL_RANDOM(path: string) {
       try {
         $$macroHeader(path);
 
@@ -863,8 +1016,8 @@ return calcObject;
       }
 
       function routine(calcObject: any, lastRst: any) {
-        calcObject['$$result'] =calcObject['$$result']['lowerLimit']['value']+ (calcObject['$$result']['upperLimit']['value'] - calcObject['$$result']['lowerLimit']['value']) * Math.random();
-        return  calcObject;
+        calcObject['$$result'] = calcObject['$$result']['lowerLimit']['value'] + (calcObject['$$result']['upperLimit']['value'] - calcObject['$$result']['lowerLimit']['value']) * Math.random();
+        return calcObject;
 
       };
     };
@@ -872,7 +1025,7 @@ return calcObject;
       if (context.$meta.macro['status'] !== "finished") throw { reason: "nofinished" };
       context.$meta.macro['status'] = "starting";
 
-      var opers = typeof params === 'object' ? params : !params?[]:[params];
+      var opers = typeof params === 'object' ? params : !params ? [] : [params];
 
       var dependencies: Promise<any>[] = [];
       for (let i = 0; i < opers.length; i++) {
@@ -896,9 +1049,9 @@ return calcObject;
       const self = this;
 
 
-      var opers = typeof params === 'object' ? params : !params?[]:[params];
-            var lastRst;
-            if(opers.length ===0&& doRoutine) lastRst = doRoutine();
+      var opers = typeof params === 'object' ? params : !params ? [] : [params];
+      var lastRst;
+      if (opers.length === 0 && doRoutine) lastRst = doRoutine();
       for (let i = 0; i < opers.length; i++) {
         var calcObject;
         if (typeof opers[i] === 'string') {
@@ -949,10 +1102,10 @@ return calcObject;
 
         Promise.all($waitings).then(function () {
           context.$meta.macro['status'] = "finished";
-          self.$waitings =[];
+          self.$waitings = [];
 
         }, function (reason) {
-         self.$waiting =[];
+          self.$waiting = [];
           context.$meta.macro['status'] = "error-waiting-timeout";
         });
         throw { reason: 'waiting' };
@@ -962,5 +1115,5 @@ return calcObject;
       return lastRst;
     };
 
-  }
+  };
 }
